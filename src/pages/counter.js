@@ -4,10 +4,6 @@ class Counter extends Component {
   state = {
     count: 0,
   };
-  constructor() {
-    super();
-    this.state = { count: 0 };
-  }
 
   render() {
     const { count } = this.state;
