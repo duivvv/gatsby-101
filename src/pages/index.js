@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import Link from 'gatsby-link';
 
-export default () => (
-  <div style={{ color: 'green' }}>
-    <h1>Hello Gatsby!</h1>
-    <p>What a world.</p>
-    <img src="https://source.unsplash.com/random/400x200" alt="" />
-    <div>
-      <Link to={`/page-2`}>Link</Link>
-    </div>
-    <div>
-      <Link to="/counter/">Counter</Link>
-    </div>
-  </div>
-);
+import Note from '../components/Note';
+import Notes from '../components/Notes';
+import Scales from '../components/Scales';
+import Scale from '../components/Scale';
+
+import { Scale as scales, createScale, NOTES } from 'music-fns';
+
+class Home extends PureComponent {
+  state = {
+    scale: Object.keys(scales)[0],
+    root: 'C',
+  };
+
+  render() {
+    const { root, scale: type } = this.state;
+    const scale = root && type ? createScale(root, scales[type]) : undefined;
+
+    return (
+      <section>
+        <h1>music-fns</h1>
+        <Notes onChange={root => this.setState({ root })} />
+        <Scales onChange={scale => this.setState({ scale })} />
+        {scale && <Scale scale={scale} />}
+      </section>
+    );
+  }
+}
+
+export default Home;
